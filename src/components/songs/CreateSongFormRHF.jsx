@@ -6,8 +6,12 @@ import { createSongSchema } from "../../schemas/songSchema";
 import { getArtists } from "../../api/artists";
 import { getAlbums } from "../../api/albums";
 import { createSong } from "../../api/songs";
+import { useAuth } from "../../contexts/authContext";
 
 export default function CreateSongFormRHF({ onCreated }) {
+
+  const auth = useAuth()
+
   const [artists, setArtists] = useState([]);
   const [allAlbums, setAllAlbums] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -83,6 +87,14 @@ export default function CreateSongFormRHF({ onCreated }) {
     } catch (err) {
       setServerError(err.message || "Kunde inte skapa song");
     }
+  }
+  
+  if(auth.user?.role !== "admin"){
+    return (
+      <div>
+        You need to be logged into a `Admin account` to see this
+      </div>
+    )
   }
 
   return (

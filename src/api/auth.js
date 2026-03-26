@@ -7,5 +7,12 @@ export async function login(loginData) {
       method: "POST",
     },
     loginData,
+    false
+  );
+}
+
+export async function getMe() {
+  return apiFetch(
+    "/auth/me",
   );
 }
